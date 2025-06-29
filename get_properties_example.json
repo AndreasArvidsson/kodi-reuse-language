@@ -1,0 +1,63 @@
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "audiostreams": [
+      {
+        "bitrate": 0,
+        "channels": 6,
+        "codec": "dtshd_ma",
+        "index": 0,
+        "isdefault": false,
+        "isimpaired": false,
+        "isoriginal": false,
+        "language": "eng",
+        "name": "Digital Theater Systems Master Audio 5.1 - DTS-HD MA 5.1(side)",
+        "samplerate": 0
+      },
+      {
+        "bitrate": 640000,
+        "channels": 6,
+        "codec": "ac3",
+        "index": 1,
+        "isdefault": true,
+        "isimpaired": false,
+        "isoriginal": false,
+        "language": "eng",
+        "name": "Dolby Digital 5.1 - AC3 5.1(side)",
+        "samplerate": 0
+      }
+    ],
+    "currentaudiostream": {
+      "bitrate": 0,
+      "channels": 6,
+      "codec": "dtshd_ma",
+      "index": 0,
+      "isdefault": false,
+      "isimpaired": false,
+      "isoriginal": false,
+      "language": "eng",
+      "name": "Digital Theater Systems Master Audio 5.1 - DTS-HD MA 5.1(side)",
+      "samplerate": 0
+    },
+    "currentsubtitle": {
+      "index": 0,
+      "isdefault": false,
+      "isforced": false,
+      "isimpaired": false,
+      "language": "eng",
+      "name": ""
+    },
+    "subtitleenabled": false,
+    "subtitles": [
+      {
+        "index": 0,
+        "isdefault": false,
+        "isforced": false,
+        "isimpaired": false,
+        "language": "eng",
+        "name": ""
+      }
+    ]
+  }
+}

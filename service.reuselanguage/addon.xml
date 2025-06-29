@@ -1,0 +1,11 @@
+<addon id="service.reuselanguage"
+    version="1.0.0"
+    name="Reuse language"
+    provider-name="Andreas Arvidsson">
+    <extension point="xbmc.service" library="main.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary>Reuse same audio stream and subtitle between videos</summary>
+        <description>During start of video playback: look for previously used audio stream and subtitle and reuse those if found</description>
+        <platform>all</platform>
+    </extension>
+</addon>
