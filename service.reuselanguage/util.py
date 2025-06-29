@@ -3,31 +3,30 @@ from my_types import PlayerStream
 
 
 def get_preferred_stream_index(
-    streams: List[PlayerStream], previous_stream: PlayerStream
+    streams: List[PlayerStream],
+    previous_stream: PlayerStream,
 ):
     language = previous_stream["language"]
     name = previous_stream["name"]
+    index = previous_stream["index"]
 
-    # First try to match both language and name
-    matched_streams = [
-        stream
-        for stream in streams
-        if stream["language"] == language and stream["name"] == name
-    ]
+    # Only match streams with the same language
+    streams = [s for s in streams if s["language"] == language]
 
-    # Secondly, try to match default stream for language
+    # 1) Try to match: language, name and index
+    matched_streams = [s for s in streams if s["name"] == name and s["index"] == index]
+
+    # 2) Try to match: language and name
     if not matched_streams:
-        matched_streams = [
-            stream
-            for stream in streams
-            if stream["language"] == language and stream["isdefault"]
-        ]
+        matched_streams = [s for s in streams if s["name"] == name]
 
-    # Finally, try to match only by language
+    # 3) Try to match: language and isdefault
     if not matched_streams:
-        matched_streams = [
-            stream for stream in streams if stream["language"] == language
-        ]
+        matched_streams = [s for s in streams if s["isdefault"]]
+
+    # 4) Try to match: language
+    if not matched_streams:
+        matched_streams = streams
 
     if not matched_streams:
         return -1
