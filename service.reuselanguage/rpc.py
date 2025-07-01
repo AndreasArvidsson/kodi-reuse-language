@@ -1,19 +1,30 @@
-import xbmc
 import json
-from my_types import PlayerProperties
+import xbmc
+from my_types import CurrentProperties, StreamsProperties
 
 player_id = 1
 
 
-def get_properties() -> PlayerProperties:
+def get_current() -> CurrentProperties:
     return rpc(
         "Player.GetProperties",
         {
-            "playerid": 1,
+            "playerid": player_id,
             "properties": [
                 "subtitleenabled",
                 "currentaudiostream",
                 "currentsubtitle",
+            ],
+        },
+    )
+
+
+def get_streams() -> StreamsProperties:
+    return rpc(
+        "Player.GetProperties",
+        {
+            "playerid": player_id,
+            "properties": [
                 "audiostreams",
                 "subtitles",
             ],
@@ -21,22 +32,22 @@ def get_properties() -> PlayerProperties:
     )
 
 
-def set_audio_stream(stream_index):
+def set_audio_stream(index):
     rpc(
         "Player.SetAudioStream",
         {
             "playerid": player_id,
-            "stream": stream_index,
+            "stream": index,
         },
     )
 
 
-def set_subtitle(subtitle_index):
+def set_subtitle(index):
     rpc(
         "Player.SetSubtitle",
         {
             "playerid": player_id,
-            "subtitle": subtitle_index,
+            "subtitle": index,
             "enable": True,
         },
     )

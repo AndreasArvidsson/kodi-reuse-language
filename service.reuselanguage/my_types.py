@@ -8,9 +8,12 @@ class PlayerStream(TypedDict):
     isdefault: bool
 
 
-class PlayerProperties(TypedDict):
+class CurrentProperties(TypedDict):
     subtitleenabled: bool
     currentaudiostream: PlayerStream
     currentsubtitle: PlayerStream
+
+
+class StreamsProperties(TypedDict):
     audiostreams: List[PlayerStream]
     subtitles: List[PlayerStream]
