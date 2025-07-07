@@ -53,6 +53,17 @@ def set_subtitle(index):
     )
 
 
+def disable_subtitle():
+    rpc(
+        "Player.SetSubtitle",
+        {
+            "playerid": player_id,
+            "subtitle": "off",
+            "enable": False,
+        },
+    )
+
+
 def rpc(method: str, params: dict):
     payload = xbmc.executeJSONRPC(
         json.dumps(
