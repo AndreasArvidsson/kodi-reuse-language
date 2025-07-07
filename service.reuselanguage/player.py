@@ -14,19 +14,16 @@ from util import get_preferred_stream_index
 
 class Player(xbmc.Player):
     do_updates: bool
-    use_stored: bool
     stored: Optional[CurrentProperties]
 
     def __init__(self):
         super().__init__()
         self.do_updates = False
-        self.use_stored = False
         self.stored = None
 
     def onAVStarted(self):
         if self.isPlayingVideo():
             self.set_streams()
-            self.stored = get_current()
             self.do_updates = True
 
     def onPlayBackStopped(self):
@@ -37,14 +34,10 @@ class Player(xbmc.Player):
 
     def update(self):
         if self.do_updates:
-            properties = get_current()
-            # Only update stored properties if they have changed since start
-            if self.use_stored or properties != self.stored:
-                self.stored = properties
-                self.use_stored = True
+            self.stored = get_current()
 
     def set_streams(self):
-        if not self.stored or not self.use_stored:
+        if not self.stored:
             return
 
         streams = get_streams()
