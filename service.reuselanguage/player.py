@@ -1,6 +1,7 @@
-from typing import Optional
+from typing import List, Optional
 
 import xbmc
+from get_preferred_stream_index import get_preferred_stream_index
 from my_types import CurrentProperties, PlayerStream
 from rpc import (
     rpc_disable_subtitle,
@@ -9,7 +10,6 @@ from rpc import (
     rpc_set_audio_stream,
     rpc_set_subtitle,
 )
-from util import get_preferred_stream_index
 
 
 class Player(xbmc.Player):
@@ -53,7 +53,7 @@ def set_streams(stored: CurrentProperties):
 
 
 def set_audio_stream(
-    audiostreams: list[PlayerStream],
+    audiostreams: List[PlayerStream],
     currentaudiostream: PlayerStream,
 ):
     if not currentaudiostream:
@@ -66,7 +66,7 @@ def set_audio_stream(
 
 
 def set_subtitle(
-    subtitles: list[PlayerStream],
+    subtitles: List[PlayerStream],
     currentsubtitle: PlayerStream,
     subtitleenabled: bool,
 ):
