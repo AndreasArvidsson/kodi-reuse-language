@@ -56,9 +56,6 @@ def set_audio_stream(
     audiostreams: List[PlayerStream],
     currentaudiostream: PlayerStream,
 ):
-    if not currentaudiostream:
-        return
-
     audio_index = get_preferred_stream_index(audiostreams, currentaudiostream)
 
     if audio_index > -1:
@@ -67,14 +64,13 @@ def set_audio_stream(
 
 def set_subtitle(
     subtitles: List[PlayerStream],
-    currentsubtitle: PlayerStream,
+    # Optional is not technically true: if not set this will be an empty dictionary.
+    currentsubtitle: Optional[PlayerStream],
     subtitleenabled: bool,
 ):
-    if not subtitleenabled:
+    # Previously stored properties had no subtitle
+    if not currentsubtitle or not subtitleenabled:
         rpc_disable_subtitle()
-        return
-
-    if not currentsubtitle:
         return
 
     subtitle_index = get_preferred_stream_index(subtitles, currentsubtitle)
