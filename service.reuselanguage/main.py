@@ -1,6 +1,5 @@
-from player import Player
 import xbmc
-
+from player import Player
 
 if __name__ == "__main__":
     monitor = xbmc.Monitor()

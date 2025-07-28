@@ -1,13 +1,13 @@
 from typing import Optional
 
 import xbmc
-from my_types import CurrentProperties
+from my_types import CurrentProperties, PlayerStream
 from rpc import (
-    disable_subtitle,
-    get_current,
-    get_streams,
-    set_audio_stream,
-    set_subtitle,
+    rpc_disable_subtitle,
+    rpc_get_current,
+    rpc_get_streams,
+    rpc_set_audio_stream,
+    rpc_set_subtitle,
 )
 from util import get_preferred_stream_index
 
@@ -23,7 +23,8 @@ class Player(xbmc.Player):
 
     def onAVStarted(self):
         if self.isPlayingVideo():
-            self.set_streams()
+            if self.stored:
+                set_streams(self.stored)
             self.do_updates = True
 
     def onPlayBackStopped(self):
@@ -34,30 +35,49 @@ class Player(xbmc.Player):
 
     def update(self):
         if self.do_updates:
-            self.stored = get_current()
+            self.stored = rpc_get_current()
 
-    def set_streams(self):
-        if not self.stored:
-            return
 
-        streams = get_streams()
+def set_streams(stored: CurrentProperties):
+    streams = rpc_get_streams()
 
-        audio_index = get_preferred_stream_index(
-            streams["audiostreams"],
-            self.stored["currentaudiostream"],
-        )
+    set_audio_stream(
+        streams["audiostreams"],
+        stored["currentaudiostream"],
+    )
+    set_subtitle(
+        streams["subtitles"],
+        stored["currentsubtitle"],
+        stored["subtitleenabled"],
+    )
 
-        if audio_index > -1:
-            set_audio_stream(audio_index)
 
-        if not self.stored["subtitleenabled"]:
-            disable_subtitle()
-            return
+def set_audio_stream(
+    audiostreams: list[PlayerStream],
+    currentaudiostream: PlayerStream,
+):
+    if not currentaudiostream:
+        return
 
-        subtitle_index = get_preferred_stream_index(
-            streams["subtitles"],
-            self.stored["currentsubtitle"],
-        )
+    audio_index = get_preferred_stream_index(audiostreams, currentaudiostream)
 
-        if subtitle_index > -1:
-            set_subtitle(subtitle_index)
+    if audio_index > -1:
+        rpc_set_audio_stream(audio_index)
+
+
+def set_subtitle(
+    subtitles: list[PlayerStream],
+    currentsubtitle: PlayerStream,
+    subtitleenabled: bool,
+):
+    if not subtitleenabled:
+        rpc_disable_subtitle()
+        return
+
+    if not currentsubtitle:
+        return
+
+    subtitle_index = get_preferred_stream_index(subtitles, currentsubtitle)
+
+    if subtitle_index > -1:
+        rpc_set_subtitle(subtitle_index)

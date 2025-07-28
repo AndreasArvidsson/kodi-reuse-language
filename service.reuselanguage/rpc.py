@@ -5,7 +5,7 @@ from my_types import CurrentProperties, StreamsProperties
 player_id = 1
 
 
-def get_current() -> CurrentProperties:
+def rpc_get_current() -> CurrentProperties:
     return rpc(
         "Player.GetProperties",
         {
@@ -19,7 +19,7 @@ def get_current() -> CurrentProperties:
     )
 
 
-def get_streams() -> StreamsProperties:
+def rpc_get_streams() -> StreamsProperties:
     return rpc(
         "Player.GetProperties",
         {
@@ -32,7 +32,7 @@ def get_streams() -> StreamsProperties:
     )
 
 
-def set_audio_stream(index):
+def rpc_set_audio_stream(index):
     rpc(
         "Player.SetAudioStream",
         {
@@ -42,7 +42,7 @@ def set_audio_stream(index):
     )
 
 
-def set_subtitle(index):
+def rpc_set_subtitle(index):
     rpc(
         "Player.SetSubtitle",
         {
@@ -53,7 +53,7 @@ def set_subtitle(index):
     )
 
 
-def disable_subtitle():
+def rpc_disable_subtitle():
     rpc(
         "Player.SetSubtitle",
         {
